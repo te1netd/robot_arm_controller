@@ -16,12 +16,96 @@ function joystick_calibration () {
         . . # . .
         . . # . .
         `)
-    pin0_calib = pins.analogReadPin(AnalogPin.P0)
-    pin1_calib = pins.analogReadPin(AnalogPin.P1)
-    pin10_calib = pins.analogReadPin(AnalogPin.P10)
-    pin2_calib = pins.analogReadPin(AnalogPin.P2)
-    pin3_calib = pins.analogReadPin(AnalogPin.P3)
-    pin4_calib = pins.analogReadPin(AnalogPin.P4)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P0)
+            basic.pause(1)
+        }
+        pin0_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        # # # # .
+        . # # # .
+        . # # # .
+        . . # . .
+        . . # . .
+        `)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P1)
+            basic.pause(1)
+        }
+        pin1_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        . # # # .
+        # # # # .
+        . # # # .
+        . . # . .
+        . . # . .
+        `)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P10)
+            basic.pause(1)
+        }
+        pin10_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        # # # # .
+        . . # . .
+        . . # . .
+        `)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P2)
+            basic.pause(1)
+        }
+        pin2_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        # . # . .
+        . . # . .
+        `)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P3)
+            basic.pause(1)
+        }
+        pin3_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        . . # . .
+        # . # . .
+        `)
+    for (let index = 0; index < 1; index++) {
+        pinread_ave = 0
+        for (let index = 0; index < 10; index++) {
+            pinread_ave += pins.analogReadPin(AnalogPin.P4)
+            basic.pause(1)
+        }
+        pin4_calib = pinread_ave / 10
+    }
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        . . # . .
+        . . # . .
+        `)
 }
 let updown = 0
 let pinread = 0
@@ -32,6 +116,7 @@ let pin2_calib = 0
 let pin10_calib = 0
 let pin1_calib = 0
 let pin0_calib = 0
+let pinread_ave = 0
 let debug = 1
 let up_threshold = -75
 let down_threshold = 75
@@ -108,9 +193,9 @@ basic.forever(function () {
         }
         // pin10 read
         if (pinread < up_threshold) {
-            message += 1
-        } else if (pinread > down_threshold) {
             message += 9
+        } else if (pinread > down_threshold) {
+            message += 1
         }
     }
     if (debug == 1) {
